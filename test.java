@@ -4,12 +4,23 @@ import java.util.Scanner;
 
 
 class test {
+  public static void rolls() {
+
+  }
+
+  // This function is used to determine the conditions of the game.
   public static void game(boolean start) {
+    /* The Scanner object below is used to allow for user input.
+       While the Math.random object is used to represent the die that the user throws for the game.*/
     Scanner input = new Scanner(System.in);
     int dice = (int)((Math.random() * 6) + 1);
 
+    // The "startingCondtions" variable is used to store the boolean argument of the function.
+      // It's inted purpose is that of seeing if this is a new game or not.
     boolean startingConditions = start;
 
+    // The if condition is used to see if this is a new game.
+      // If it is then the code within the if statement is executed.
     if (startingConditions == true) {
       System.out.println("How many players are playing the game? ");
       int numberOfPlayers = input.nextInt();
