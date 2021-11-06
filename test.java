@@ -6,20 +6,6 @@ import java.util.Hashtable;
 
 
 class test {
-  // The function below is used to ask the user the question.
-     // Depending on the size of the Hashtable containing the questions, a random number will be generated which will be used to print out a random question.
-  public static String questionToAsk(ArrayList<String> QuestionArray, ArrayList<String> AnswersArray) {
-    // The variable "randomNumber" below is used to select the index value of the ArrayList to ask the user that question.
-       // Since "Math.random" will output a double, we have to use the "(int)" to change the variable to an integer.
-    int randomNumber = (int)(Math.random() * QuestionArray.size());
-
-    // The call below is used to give the "AnswersToQuestions" function the answer to the question.
-    AnswersToQuestions(AnswersArray.get(randomNumber));
-
-    // The "return" statement below is used to return the random question.
-    return QuestionArray.get(randomNumber);
-  }
-
   // The following function is used to store the answer for the question that is outputted to the screen.
   public static void AnswersToQuestions(String Answer) {
     String questionAnswer = Answer;
@@ -47,6 +33,8 @@ class test {
     questionsDictionary.put("What team has the most NBA championships? ", "Celtics and Lakers");
     questionsDictionary.put("When did the Bulls lose in the finals? ", "never");
 
+    int randomIndex = (int)(Math.random() * questionsDictionary.size());
+
     // For loop will add all of the keyValues of the dictionary to the ArrayList.
     for (String i : questionsDictionary.keySet()) {
       keyValuesDic.add(i);
@@ -57,9 +45,11 @@ class test {
       AnswersValuesDic.add(i);
     }
 
-    // The return statement below will print out the returned statement (question) that the user has to answer in the game.
-       // This is so that we can return it back to the "gameAlgorithm" function.
-    return questionToAsk(keyValuesDic, AnswersValuesDic);
+    String question = keyValuesDic.get(randomIndex);
+    String answer = AnswersValuesDic.get(randomIndex);
+
+    System.out.println(question);
+    return answer;
   }
 
   // The functions purpose is that of constantly generating a new random number that can be used.
@@ -85,10 +75,12 @@ class test {
       for (int i = 0; i < playerCount; i++) {
         System.out.println("You rolled a: " + randomNumberFunc());
 
-        System.out.println(questions());
+        String answer = questions();
+        String userAnswer = input.nextLine();
 
-        String UserAnswer = input.nextLine();
-        // if (userAnswer.equals(questions))
+        if (userAnswer.equals(answer)) {
+          System.out.println("You're correct");
+        }
       }
       break;
     }
