@@ -6,9 +6,25 @@ import java.util.Hashtable;
 
 
 class test {
-  public static String questions() {
+  // The function below is used to ask the user the question.
+     // Depending on the size of the Hashtable containing the questions, a random number will be generated which will be used to print out a random question.
+  public static String questionToAsk(ArrayList<String> QuestionArray) {
+    // The variable "randomNumber" below is used to select the index value of the ArrayList to ask the user that question.
+       // Since "Math.random" will output a double, we have to use the "(int)" to change the variable to an integer.
+    int randomNumber = (int)(Math.random() * QuestionArray.size());
+
+    // The "return" statement below is used to return the random question. 
+    return QuestionArray.get(randomNumber);
+  }
+
+  // This function has the purpose of containing the questions and answers.
+     // It's just i salso that of checking if the answers are correct or not.
+  public static void questions() {
     // Dictionary containing all of the questions required for the game.
     Hashtable<String, String> questionsDictionary = new Hashtable<String, String>();
+
+    // ArrayList that'll be used to store the key values of the dictionary.
+    ArrayList<String> keyValuesDic = new ArrayList<String>();
 
     // Adding keys and values (Question, Answer)
 
@@ -21,81 +37,24 @@ class test {
 
     int indexValue = (int)(Math.random() * questionsDictionary.size());
 
-    System.out.println((questionsDictionary.keySet()).get(indexValue));
-    return questionsDictionary.get(indexValue);
+    // For loop will add all of the keyValues of the dictionary to the ArrayList.
+    for (String i : questionsDictionary.keySet()) {
+      keyValuesDic.add(i);
+    }
+
+
+    // The print statement below will print out the returned statement (question) that the user has to answer in the game.
+    System.out.println(questionToAsk(keyValuesDic));
+    // Test
+    //System.out.println(keyValuesDic);
   }
 
   public static void gameAlgorithm(int playersInGame) {
-    Scanner input = new Scanner(System.in);
+    int playerCout = playersInGame;
 
-    ArrayList<Integer> playerRolls = new ArrayList<Integer>();
-    ArrayList<Integer> hotSpots = new ArrayList<Integer>();
+    questions();
 
-    /* The for loop is used to roll the dice for each player in the game.
-       Once the dice has been rolled once, it'll be added to the ArrayList defined above. */
-    for (int i = 0; i < playersInGame; i++) {
-      // The Math.random object is used to represent the die that the user throws for the game.
-      int dice = (int)((Math.random() * 6) + 1);
 
-      // This is used to keep the
-      int hotSpot = (int)(Math.random() * 3);
-
-      // This will add the rolls that the player rolled in the "playerRolls" arraylist.
-      playerRolls.add(dice);
-      hotSpots.add(hotSpot);
-
-      if (hotSpots.get(i) == 0) {
-        // Normal Question
-        questionAnswer = questions();
-
-        String answer = input.nextLine();
-        if (answer.equals(questionAnswer)) {
-          System.out.println("You're correct!");
-        } else {
-          System.out.println("Wrong");
-          playerRolls.get(i) -= 1;
-
-          if (playerRolls.get(i) < 0) {
-            playerRolls.get(i) = 0;
-          }
-        }
-      } else if (hotSpots.get(i) == 1) {
-        // Secret Passage
-        questionAnswer = questions();
-
-        String answer = input.nextLine();
-        if (answer.equals(questionAnswer)) {
-          System.out.println("You're correct!");
-
-          int randomNum = (int)((Math.random() * 3) + 1);
-          playerRolls.get(i) += randomNum;
-        } else {
-          System.out.println("Wrong");
-          playerRolls.get(i) -= 1;
-
-          if (playerRolls.get(i) < 0) {
-            playerRolls.get(i) = 0;
-          }
-        }
-      } else if (hotSpots.get(i) == 2) {
-        // Trap
-        questionAnswer = questions();
-
-        String answer = input.nextLine();
-        if (answer.equals(questionAnswer)) {
-          System.out.println("You're correct!");
-        } else {
-          System.out.println("Wrong");
-
-          int randomNum = (int)((Math.random() * 3) + 1);
-          playerRolls.get(i) -= randomNum;
-
-          if (playerRolls.get(i) < 0) {
-            playerRolls.get(i) = 0;
-          }
-        }
-      }
-    }
   }
 
   // This function is used to determine the conditions of the game.
@@ -106,9 +65,6 @@ class test {
     // The "startingCondtions" variable is used to store the boolean argument of the function.
       // It's inted purpose is that of seeing if this is a new game or not.
     boolean startingConditions = start;
-
-    // The purpose of the "end" boolean is to determine if the game has ended or not.
-    boolean end = false;
 
     // The if condition is used to see if this is a new game.
       // If it is then the code within the if statement is executed.
