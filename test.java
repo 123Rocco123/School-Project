@@ -45,9 +45,11 @@ class test {
       AnswersValuesDic.add(i);
     }
 
+    // These are the questions and answer combos that the players are asked.
     String question = keyValuesDic.get(randomIndex);
     String answer = AnswersValuesDic.get(randomIndex);
 
+    // While the answer is returned so that it can be stored and compared to the user input, the question is printed out to the terminal. 
     System.out.println(question);
     return answer;
   }
@@ -73,7 +75,7 @@ class test {
 
     while (gameOver == false) {
       for (int i = 0; i < playerCount; i++) {
-        System.out.println("You rolled a: " + randomNumberFunc());
+        System.out.println("Player " + (i + 1) + ", you rolled a: " + randomNumberFunc());
 
         String answer = questions();
         String userAnswer = input.nextLine();
