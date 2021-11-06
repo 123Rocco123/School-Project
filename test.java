@@ -8,13 +8,23 @@ import java.util.Hashtable;
 class test {
   // The function below is used to ask the user the question.
      // Depending on the size of the Hashtable containing the questions, a random number will be generated which will be used to print out a random question.
-  public static String questionToAsk(ArrayList<String> QuestionArray) {
+  public static String questionToAsk(ArrayList<String> QuestionArray, ArrayList<String> AnswersArray) {
     // The variable "randomNumber" below is used to select the index value of the ArrayList to ask the user that question.
        // Since "Math.random" will output a double, we have to use the "(int)" to change the variable to an integer.
     int randomNumber = (int)(Math.random() * QuestionArray.size());
 
+    // The call below is used to give the "AnswersToQuestions" function the answer to the question.
+    AnswersToQuestions(AnswersArray.get(randomNumber));
+
     // The "return" statement below is used to return the random question.
     return QuestionArray.get(randomNumber);
+  }
+
+  // The following function is used to store the answer for the question that is outputted to the screen.
+  public static void AnswersToQuestions(String Answer) {
+    String questionAnswer = Answer;
+
+    System.out.print(questionAnswer + " ");
   }
 
   // This function has the purpose of containing the questions and answers.
@@ -24,7 +34,9 @@ class test {
     Hashtable<String, String> questionsDictionary = new Hashtable<String, String>();
 
     // ArrayList that'll be used to store the key values of the dictionary.
+       // ArrayList below stores the values.
     ArrayList<String> keyValuesDic = new ArrayList<String>();
+    ArrayList<String> AnswersValuesDic = new ArrayList<String>();
 
     // Adding keys and values (Question, Answer)
 
@@ -40,12 +52,17 @@ class test {
       keyValuesDic.add(i);
     }
 
+    // For loop will add all of the Values of the dictionary to the ArrayList.
+    for (String i : questionsDictionary.values()) {
+      AnswersValuesDic.add(i);
+    }
+
     // The return statement below will print out the returned statement (question) that the user has to answer in the game.
        // This is so that we can return it back to the "gameAlgorithm" function.
-    return questionToAsk(keyValuesDic);
+    return questionToAsk(keyValuesDic, AnswersValuesDic);
   }
 
-  // The functions purpose is that of constantly generating a new random number that can be used
+  // The functions purpose is that of constantly generating a new random number that can be used.
   public static int randomNumberFunc() {
     int diceThrow = (int)((Math.random() * 6) + 1);
 
@@ -54,6 +71,9 @@ class test {
 
   // The function below is used to store the Algorithm for the game.
   public static void gameAlgorithm(int playersInGame) {
+    // The ArrayList below is used to store the positions of the players.
+    ArrayList<Integer> PlayerPositions = new ArrayList<Integer>();
+
     Scanner input = new Scanner(System.in);
 
     // The argument "playersInGame" is saved here for it to be used later in the for loop.
@@ -66,6 +86,9 @@ class test {
         System.out.println("You rolled a: " + randomNumberFunc());
 
         System.out.println(questions());
+
+        String UserAnswer = input.nextLine();
+        // if (userAnswer.equals(questions))
       }
       break;
     }
