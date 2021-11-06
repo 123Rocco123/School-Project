@@ -13,13 +13,13 @@ class test {
        // Since "Math.random" will output a double, we have to use the "(int)" to change the variable to an integer.
     int randomNumber = (int)(Math.random() * QuestionArray.size());
 
-    // The "return" statement below is used to return the random question. 
+    // The "return" statement below is used to return the random question.
     return QuestionArray.get(randomNumber);
   }
 
   // This function has the purpose of containing the questions and answers.
      // It's just i salso that of checking if the answers are correct or not.
-  public static void questions() {
+  public static String questions() {
     // Dictionary containing all of the questions required for the game.
     Hashtable<String, String> questionsDictionary = new Hashtable<String, String>();
 
@@ -35,26 +35,40 @@ class test {
     questionsDictionary.put("What team has the most NBA championships? ", "Celtics and Lakers");
     questionsDictionary.put("When did the Bulls lose in the finals? ", "never");
 
-    int indexValue = (int)(Math.random() * questionsDictionary.size());
-
     // For loop will add all of the keyValues of the dictionary to the ArrayList.
     for (String i : questionsDictionary.keySet()) {
       keyValuesDic.add(i);
     }
 
-
-    // The print statement below will print out the returned statement (question) that the user has to answer in the game.
-    System.out.println(questionToAsk(keyValuesDic));
-    // Test
-    //System.out.println(keyValuesDic);
+    // The return statement below will print out the returned statement (question) that the user has to answer in the game.
+       // This is so that we can return it back to the "gameAlgorithm" function.
+    return questionToAsk(keyValuesDic);
   }
 
+  // The functions purpose is that of constantly generating a new random number that can be used
+  public static int randomNumberFunc() {
+    int diceThrow = (int)((Math.random() * 6) + 1);
+
+    return diceThrow;
+  }
+
+  // The function below is used to store the Algorithm for the game.
   public static void gameAlgorithm(int playersInGame) {
-    int playerCout = playersInGame;
+    Scanner input = new Scanner(System.in);
 
-    questions();
+    // The argument "playersInGame" is saved here for it to be used later in the for loop.
+    int playerCount = playersInGame;
 
+    boolean gameOver = false;
 
+    while (gameOver == false) {
+      for (int i = 0; i < playerCount; i++) {
+        System.out.println("You rolled a: " + randomNumberFunc());
+
+        System.out.println(questions());
+      }
+      break;
+    }
   }
 
   // This function is used to determine the conditions of the game.
