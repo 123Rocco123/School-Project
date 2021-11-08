@@ -49,7 +49,7 @@ class test {
     String question = keyValuesDic.get(randomIndex);
     String answer = AnswersValuesDic.get(randomIndex);
 
-    // While the answer is returned so that it can be stored and compared to the user input, the question is printed out to the terminal. 
+    // While the answer is returned so that it can be stored and compared to the user input, the question is printed out to the terminal.
     System.out.println(question);
     return answer;
   }
@@ -66,6 +66,10 @@ class test {
     // The ArrayList below is used to store the positions of the players.
     ArrayList<Integer> PlayerPositions = new ArrayList<Integer>();
 
+    PlayerPositions.add(0);
+    PlayerPositions.add(0);
+    PlayerPositions.add(0);
+
     Scanner input = new Scanner(System.in);
 
     // The argument "playersInGame" is saved here for it to be used later in the for loop.
@@ -75,13 +79,19 @@ class test {
 
     while (gameOver == false) {
       for (int i = 0; i < playerCount; i++) {
-        System.out.println("Player " + (i + 1) + ", you rolled a: " + randomNumberFunc());
+        System.out.println("\nPlayer " + (i + 1) + ", you rolled a: " + randomNumberFunc() + "\n");
 
         String answer = questions();
         String userAnswer = input.nextLine();
 
         if (userAnswer.equals(answer)) {
           System.out.println("You're correct");
+        } else {
+          System.out.println("You're incorrect");
+
+          // If the user is incorrect, then they'll have to move back by one space.
+          int newPos = PlayerPositions.get(i);
+          PlayerPositions.set(i, (newPos - 1));
         }
       }
       break;
