@@ -61,15 +61,28 @@ class test {
     return diceThrow;
   }
 
-  // The function below is used to store the Algorithm for the game.
-  public static void gameAlgorithm(int playersInGame) {
+  public static int playerPositions(int playersInTheGame, int playerIndex) {
     // The ArrayList below is used to store the positions of the players.
     ArrayList<Integer> PlayerPositions = new ArrayList<Integer>();
 
-    PlayerPositions.add(0);
-    PlayerPositions.add(0);
-    PlayerPositions.add(0);
+    int chutesOrLadderProb = (int)(Math.random() * 101);
+    int chutes = (int)(Math.random() * 21);
 
+    // Depending on the amount of players that are going to play the game game, the for loop will repeat that many times.
+       // This means that depending on the amount of players, more or less starting positions will be added to the "PlayerPositions" ArrayList.
+    for (int i = 0; i < playersInTheGame; i++) {
+      PlayerPositions.add(0);
+    }
+
+    if (chutesOrLadderProb <= 50) {
+      int oldValue = ArrayList.get(index);
+      ArrayList.set(index, (oldValue - chutes))
+    }
+
+  }
+
+  // The function below is used to store the Algorithm for the game.
+  public static void gameAlgorithm(int playersInGame) {
     Scanner input = new Scanner(System.in);
 
     // The argument "playersInGame" is saved here for it to be used later in the for loop.
