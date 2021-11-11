@@ -72,7 +72,9 @@ class test {
     } else if (chutesOrLadderProb >= 50 && chutesOrLadderProb < 75 && LadderOrChute.equals("chute")) {
       return currentIndex - chuteOrLadder;
     } else if (chutesOrLadderProb >= 75 && chutesOrLadderProb <= 100 && LadderOrChute.equals("ladder")) {
-      return currentIndex - chuteOrLadder;
+      return currentIndex + chuteOrLadder;
+    } else {
+      return 0;
     }
   }
 
@@ -93,7 +95,7 @@ class test {
     // Depending on the amount of players that are going to play the game game, the for loop will repeat that many times.
        // This means that depending on the amount of players, more or less starting positions will be added to the "PlayerPositions" ArrayList.
     if (newGame == true) {
-      for (int i = 0; i < playersInTheGame; i++) {
+      for (int i = 0; i < playerCount; i++) {
         PlayerPositions.add(0);
       }
       newGame = false;
@@ -102,8 +104,9 @@ class test {
     // The "gameOver" function is used to determine when the game has finished.
     boolean gameOver = false;
 
-    // The while loop is used to combine all of the questions, postions of the player, and etc to create the game itself. 
+    // The while loop is used to combine all of the questions, postions of the player, and etc to create the game itself.
     while (gameOver == false) {
+      //
       for (int i = 0; i < playerCount; i++) {
         int currentPositionOnBoard = PlayerPositions.get(i);
         System.out.println("\nPlayer " + (i + 1) + ", you rolled a: " + randomNumberFunc() + "\n");
@@ -114,13 +117,17 @@ class test {
         if (userAnswer.equals(answer)) {
           System.out.println("You're correct");
 
-          PlayerPositions.set(playerPositions(currentPositionOnBoard, "ladder"));
+          System.out.println(PlayerPositions.get(i));
+          PlayerPositions.set(i, playerPositions(currentPositionOnBoard, "ladder"));
+          System.out.println(PlayerPositions.get(i));
         } else {
           System.out.println("You're incorrect");
 
+          System.out.println(PlayerPositions.get(i));
           // If the user is incorrect, then they'll have to move back.
              // The amount that they move back is based on how long the ladder is.
-          PlayerPositions.set(playerPositions(currentPositionOnBoard, "chute"));
+          PlayerPositions.set(i, playerPositions(currentPositionOnBoard, "chute"));
+          System.out.println(PlayerPositions.get(i));
         }
       }
       break;
