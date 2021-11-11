@@ -61,12 +61,12 @@ class test {
     return diceThrow;
   }
 
-  // The function is used to determine the position of the player after they've made a mistake.
+  // The function is used to determine the position of the player after they've made a mistake or if they've landed on a ladder.
   public static int playerPositions(int currentIndex, String LadderOrChute) {
     int chutesOrLadderProb = (int)(Math.random() * 101);
     int chuteOrLadder = (int)(Math.random() * 21);
 
-    /*  */
+    /* The if else statements below are used to determine the new positions of the players depending on if they landed on a ladder, chute, or if they just got the answer wrong, and have to move one step back.  */
     if (chutesOrLadderProb < 50 && !(LadderOrChute.equals("chute")) && !(LadderOrChute.equals("ladder"))) {
       return currentIndex - 1;
     } else if (chutesOrLadderProb >= 50 && chutesOrLadderProb < 75 && LadderOrChute.equals("chute")) {
@@ -96,11 +96,13 @@ class test {
       for (int i = 0; i < playersInTheGame; i++) {
         PlayerPositions.add(0);
       }
+      newGame = false;
     }
 
+    // The "gameOver" function is used to determine when the game has finished.
     boolean gameOver = false;
-    newGame = false;
 
+    // The while loop is used to combine all of the questions, postions of the player, and etc to create the game itself. 
     while (gameOver == false) {
       for (int i = 0; i < playerCount; i++) {
         int currentPositionOnBoard = PlayerPositions.get(i);
