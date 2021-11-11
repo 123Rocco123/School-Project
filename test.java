@@ -63,18 +63,16 @@ class test {
 
   // The function is used to determine the position of the player after they've made a mistake or if they've landed on a ladder.
   public static int playerPositions(int currentIndex, String LadderOrChute) {
-    int chutesOrLadderProb = (int)(Math.random() * 101);
-    int chuteOrLadder = (int)(Math.random() * 21);
+    int chuteOrLadder = (int)((Math.random() * 21) + 10);
 
-    /* The if else statements below are used to determine the new positions of the players depending on if they landed on a ladder, chute, or if they just got the answer wrong, and have to move one step back.  */
-    if (chutesOrLadderProb < 50 && !(LadderOrChute.equals("chute")) && !(LadderOrChute.equals("ladder"))) {
-      return currentIndex - 1;
-    } else if (chutesOrLadderProb >= 50 && chutesOrLadderProb < 75 && LadderOrChute.equals("chute")) {
-      return currentIndex - chuteOrLadder;
-    } else if (chutesOrLadderProb >= 75 && chutesOrLadderProb <= 100 && LadderOrChute.equals("ladder")) {
-      return currentIndex + chuteOrLadder;
+    /* The if else statements below are used to determine the new positions of the players depending on if they landed on a ladder, chute, or if they just got the answer wrong, and have to move one step back.
+          The if statements are based off of the arguments that are passed on into it by the function. */
+      if (LadderOrChute.equals("chute")) {
+        return currentIndex - chuteOrLadder;
+    } else if (LadderOrChute.equals("ladder")) {
+        return currentIndex + chuteOrLadder;
     } else {
-      return 0;
+        return 0;
     }
   }
 
@@ -101,6 +99,8 @@ class test {
       newGame = false;
     }
 
+    System.out.println(PlayerPositions);
+
     // The "gameOver" function is used to determine when the game has finished.
     boolean gameOver = false;
 
@@ -108,8 +108,14 @@ class test {
     while (gameOver == false) {
       //
       for (int i = 0; i < playerCount; i++) {
+        int diceThrow = randomNumberFunc();
+        int oldValue = PlayerPositions.get(i);
+        int normalOrSpecial = (int)(Math.random() * 2);
+
+        System.out.println(diceThrow +" "+ oldValue +" "+ normalOrSpecial);
+
         int currentPositionOnBoard = PlayerPositions.get(i);
-        System.out.println("\nPlayer " + (i + 1) + ", you rolled a: " + randomNumberFunc() + "\n");
+        System.out.println("\nPlayer " + (i + 1) + ", you rolled a: " + diceThrow + "\n");
 
         String answer = questions();
         String userAnswer = input.nextLine();
@@ -117,19 +123,26 @@ class test {
         if (userAnswer.equals(answer)) {
           System.out.println("You're correct");
 
-          System.out.println(PlayerPositions.get(i));
-          PlayerPositions.set(i, playerPositions(currentPositionOnBoard, "ladder"));
-          System.out.println(PlayerPositions.get(i));
+          if (normalOrSpecial == 0) {
+            PlayerPositions.set(i, (oldValue + diceThrow));
+          } else if (normalOrSpecial == 1) {
+            int rightAndLadder = playerPositions(currentPositionOnBoard, "ladder");
+            PlayerPositions.set(i, (oldValue + rightAndLadder));
+          }
         } else {
           System.out.println("You're incorrect");
 
-          System.out.println(PlayerPositions.get(i));
           // If the user is incorrect, then they'll have to move back.
              // The amount that they move back is based on how long the ladder is.
-          PlayerPositions.set(i, playerPositions(currentPositionOnBoard, "chute"));
-          System.out.println(PlayerPositions.get(i));
+          if (normalOrSpecial == 0) {
+            PlayerPositions.set(i, (oldValue - diceThrow));
+          } else if (normalOrSpecial == 1) {
+            int wrongAndChute = playerPositions(currentPositionOnBoard, "chute");
+            PlayerPositions.set(i, (oldValue - wrongAndChute));
+          }
         }
       }
+      System.out.println(PlayerPositions);
       break;
     }
   }
