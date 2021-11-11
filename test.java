@@ -61,37 +61,49 @@ class test {
     return diceThrow;
   }
 
-  public static int playerPositions(int playersInTheGame, int playerIndex) {
-    // The ArrayList below is used to store the positions of the players.
-    ArrayList<Integer> PlayerPositions = new ArrayList<Integer>();
-
+  // The function is used to determine the position of the player after they've made a mistake.
+  public static int playerPositions(int currentIndex, String LadderOrChute) {
     int chutesOrLadderProb = (int)(Math.random() * 101);
-    int chutes = (int)(Math.random() * 21);
+    int chuteOrLadder = (int)(Math.random() * 21);
 
-    // Depending on the amount of players that are going to play the game game, the for loop will repeat that many times.
-       // This means that depending on the amount of players, more or less starting positions will be added to the "PlayerPositions" ArrayList.
-    for (int i = 0; i < playersInTheGame; i++) {
-      PlayerPositions.add(0);
+    /*  */
+    if (chutesOrLadderProb < 50 && !(LadderOrChute.equals("chute")) && !(LadderOrChute.equals("ladder"))) {
+      return currentIndex - 1;
+    } else if (chutesOrLadderProb >= 50 && chutesOrLadderProb < 75 && LadderOrChute.equals("chute")) {
+      return currentIndex - chuteOrLadder;
+    } else if (chutesOrLadderProb >= 75 && chutesOrLadderProb <= 100 && LadderOrChute.equals("ladder")) {
+      return currentIndex - chuteOrLadder;
     }
-
-    if (chutesOrLadderProb <= 50) {
-      int oldValue = ArrayList.get(index);
-      ArrayList.set(index, (oldValue - chutes))
-    }
-
   }
 
   // The function below is used to store the Algorithm for the game.
   public static void gameAlgorithm(int playersInGame) {
     Scanner input = new Scanner(System.in);
 
+    // The variable is used to determine if this is the first game or not.
+       // This is used to determine if we have to add new starting positions to the "PlayerPositions" ArrayList.
+    boolean newGame = true;
+
+    // The ArrayList below is used to store the positions of the players.
+    ArrayList<Integer> PlayerPositions = new ArrayList<Integer>();
+
     // The argument "playersInGame" is saved here for it to be used later in the for loop.
     int playerCount = playersInGame;
 
+    // Depending on the amount of players that are going to play the game game, the for loop will repeat that many times.
+       // This means that depending on the amount of players, more or less starting positions will be added to the "PlayerPositions" ArrayList.
+    if (newGame == true) {
+      for (int i = 0; i < playersInTheGame; i++) {
+        PlayerPositions.add(0);
+      }
+    }
+
     boolean gameOver = false;
+    newGame = false;
 
     while (gameOver == false) {
       for (int i = 0; i < playerCount; i++) {
+        int currentPositionOnBoard = PlayerPositions.get(i);
         System.out.println("\nPlayer " + (i + 1) + ", you rolled a: " + randomNumberFunc() + "\n");
 
         String answer = questions();
@@ -99,12 +111,14 @@ class test {
 
         if (userAnswer.equals(answer)) {
           System.out.println("You're correct");
+
+          PlayerPositions.set(playerPositions(currentPositionOnBoard, "ladder"));
         } else {
           System.out.println("You're incorrect");
 
-          // If the user is incorrect, then they'll have to move back by one space.
-          int newPos = PlayerPositions.get(i);
-          PlayerPositions.set(i, (newPos - 1));
+          // If the user is incorrect, then they'll have to move back.
+             // The amount that they move back is based on how long the ladder is.
+          PlayerPositions.set(playerPositions(currentPositionOnBoard, "chute"));
         }
       }
       break;
