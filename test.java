@@ -76,6 +76,28 @@ class test {
     }
   }
 
+  // The "board" function has the role of outputting the board that the players are playing on.
+  public static void board(int playerPostion) {
+    ArrayList<String> strList = new ArrayList<String>();
+
+    for (int x = 0; x < 10; x++) {
+      for(int i = 0; i < 10; i++){
+        strList.add("|_|");
+      }
+    }
+
+    strList.set(playerPostion, "|x|");
+
+    int index = 0;
+
+    for(int x = 0; x < 10; x++) {
+      for(int i = 0; i < 10; i++) {
+        System.out.print(strList.get(index));
+        index += 1;
+      } System.out.println("");
+    }
+  }
+
   // The function below is used to store the Algorithm for the game.
   public static void gameAlgorithm(int playersInGame) {
     Scanner input = new Scanner(System.in);
