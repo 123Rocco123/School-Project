@@ -110,7 +110,7 @@ class test {
       for (int i = 0; i < playerCount; i++) {
         int diceThrow = randomNumberFunc();
         int oldValue = PlayerPositions.get(i);
-        int normalOrSpecial = (int)(Math.random() * 2);
+        int normalOrSpecial = (int)(Math.random() * 6);
 
         System.out.println(diceThrow +" "+ oldValue +" "+ normalOrSpecial);
 
@@ -123,22 +123,22 @@ class test {
         if (userAnswer.equals(answer)) {
           System.out.println("You're correct");
 
-          if (normalOrSpecial == 0) {
+          if (normalOrSpecial < 4) {
             PlayerPositions.set(i, (oldValue + diceThrow));
-          } else if (normalOrSpecial == 1) {
+          } else if (normalOrSpecial == 5) {
             int rightAndLadder = playerPositions(currentPositionOnBoard, "ladder");
-            PlayerPositions.set(i, (oldValue + rightAndLadder));
+            PlayerPositions.set(i, rightAndLadder);
           }
         } else {
           System.out.println("You're incorrect");
 
           // If the user is incorrect, then they'll have to move back.
              // The amount that they move back is based on how long the ladder is.
-          if (normalOrSpecial == 0) {
-            PlayerPositions.set(i, (oldValue - diceThrow));
-          } else if (normalOrSpecial == 1) {
+          if (normalOrSpecial < 4) {
+            PlayerPositions.set(i, (oldValue - 1));
+          } else if (normalOrSpecial == 5) {
             int wrongAndChute = playerPositions(currentPositionOnBoard, "chute");
-            PlayerPositions.set(i, (oldValue - wrongAndChute));
+            PlayerPositions.set(i, wrongAndChute);
           }
         }
       }
