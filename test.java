@@ -79,8 +79,10 @@ class test {
   }
 
   // The "board" function has the role of outputting the board that the players are playing on.
-  public static void board(int playerPostion) {
+  public static void board(ArrayList players, int playerPosition) {
     ArrayList<String> strList = new ArrayList<String>();
+    ArrayList<String> playersPlaying = new ArrayList<String>();
+    playersPlaying = players;
 
     // The for loop is used to apped new board pieces to the ArrayList "strlist" above.
        // The goal of this being that we're able to re-create the chutes and ladders board with pieces representing the players.
@@ -91,9 +93,31 @@ class test {
       }
     }
 
+    String newIndex = "";
+
     // Depending on the position that the player is at, then they'll appear at different places on the board.
        // The set dot notation is used to change the current index with the player "piece".
-    strList.set(playerPostion, "|x|");
+    if (playersPlaying.size() == 1) {
+      for (int i = 0; i < playersPlaying.size(); i++) {
+        String newPosition = "|" + playersPlaying.get(i) + "|";
+
+        strList.set(playerPosition, newPosition);
+      }
+    } else if (playersPlaying.size() == 2) {
+      for (int i = 0; i < playersPlaying.size(); i++) {
+        newIndex += (playersPlaying.get(i));
+
+        strList.set(playerPosition, newIndex);
+      }
+      newIndex += "|";
+      strList.set(playerPosition, newIndex);
+    } else if (playersPlaying.size() == 3) {
+      for (int i = 0; i < playersPlaying.size(); i++) {
+        newIndex += (playersPlaying.get(i));
+
+        strList.set(playerPosition, newIndex);
+      }
+    }
 
     // The index below is used to determine when to stop printing the board.
        // Depending on the index.
@@ -105,7 +129,8 @@ class test {
       for(int i = 0; i < 10; i++) {
         System.out.print(strList.get(index));
         index += 1;
-      } System.out.println("");
+      }
+      System.out.println("");
     }
   }
 
@@ -180,6 +205,26 @@ class test {
     }
   }
 
+  public static void pieceSelection(int numberOfPlayers) {
+    Scanner input = new Scanner(System.in);
+    ArrayList<String> playerPieces = new ArrayList<String>();
+
+    // The for loop below is used to ask the player / players what pieces they want to use to play the game.
+    for (int i = 0; i < numberOfPlayers; i++) {
+      System.out.println("Choose your piece out of: x, y, z");
+
+      String chosenPieceIs = input.nextLine();
+      if (chosenPieceIs.equals("x") || chosenPieceIs.equals("y") || chosenPieceIs.equals("z")) {
+        playerPieces.add(chosenPieceIs);
+      } else {
+        System.out.println("Invalid piece chosen");
+        pieceSelection(numberOfPlayers);
+      }
+    }
+
+    board(playerPieces, 0);
+  }
+
   // This function is used to determine the conditions of the game.
   public static void game(boolean start) {
     // The Scanner object below is used to allow for user input
@@ -196,6 +241,8 @@ class test {
       int numberOfPlayers = input.nextInt();
 
       startingConditions = false;
+
+      pieceSelection(numberOfPlayers);
       gameAlgorithm(numberOfPlayers);
     }
   }
