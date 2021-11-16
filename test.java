@@ -80,16 +80,25 @@ class test {
   public static void board(int playerPostion) {
     ArrayList<String> strList = new ArrayList<String>();
 
+    // The for loop is used to apped new board pieces to the ArrayList "strlist" above.
+       // The goal of this being that we're able to re-create the chutes and ladders board with pieces representing the players.
     for (int x = 0; x < 10; x++) {
-      for(int i = 0; i < 10; i++){
+      // The inner for loop is used to create the rows of the board, while the outer for loop will repeat the process 10 times, as there are 10 rows on the board.
+      for (int i = 0; i < 10; i++) {
         strList.add("|_|");
       }
     }
 
+    // Depending on the position that the player is at, then they'll appear at different places on the board.
+       // The set dot notation is used to change the current index with the player "piece".
     strList.set(playerPostion, "|x|");
 
+    // The index below is used to determine when to stop printing the board.
+       // Depending on the index.
     int index = 0;
 
+    // The for loop below is used in a similar way as the one above.
+       // The key difference being that instead of appending something to the ArrayList, we're just printing it out based on the index. 
     for(int x = 0; x < 10; x++) {
       for(int i = 0; i < 10; i++) {
         System.out.print(strList.get(index));
