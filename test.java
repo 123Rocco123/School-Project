@@ -104,14 +104,20 @@ class test {
         strList.set(playersPlayingIndex.get(0), newPosition);
       }
     } else if (playersPlaying.size() == 2) {
-      //if ()
-      for (int i = 0; i < playersPlaying.size(); i++) {
-        newIndex += (playersPlaying.get(i));
+      if (playersPlayingIndex.get(0) == playersPlayingIndex.get(1)) {
+        for (int i = 0; i < playersPlaying.size(); i++) {
+          newIndex += (playersPlaying.get(i));
 
-        strList.set(playersPlayingIndex.get(i), newIndex);
+          strList.set(playersPlayingIndex.get(i), newIndex);
+        }
+
+        newIndex += "|";
+        strList.set(playersPlayingIndex.get(0), newIndex);
       }
-      newIndex += "|";
-      strList.set(playersPlayingIndex.get(0), newIndex);
+      else {
+        strList.set(playersPlayingIndex.get(0), ("|" + playersPlaying.get(0) + "|"));
+        strList.set(playersPlayingIndex.get(1), ("|" + playersPlaying.get(1) + "|"));
+      }
     } else if (playersPlaying.size() == 3) {
       for (int i = 0; i < playersPlaying.size(); i++) {
         newIndex += (playersPlaying.get(i));
