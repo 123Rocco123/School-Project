@@ -85,7 +85,7 @@ class test {
     ArrayList<Integer> playersPlayingIndex = playerPosition;
 
     // The for loop is used to apped new board pieces to the ArrayList "strlist" above.
-       // The goal of this being that we're able to re-create the chutes and ladders board with pieces representing the players.
+      // The goal of this being that we're able to re-create the chutes and ladders board with pieces representing the players.
     for (int x = 0; x < 10; x++) {
       // The inner for loop is used to create the rows of the board, while the outer for loop will repeat the process 10 times, as there are 10 rows on the board.
       for (int i = 0; i < 10; i++) {
@@ -96,35 +96,33 @@ class test {
     String newIndex = "";
 
     // Depending on the position that the player is at, then they'll appear at different places on the board.
-       // The set dot notation is used to change the current index with the player "piece".
+      // The set dot notation is used to change the current index with the player "piece".
+      // The if conditions below determine how many indexes have to change, and how they have to change depending on the amount of players that are currently in game.
     if (playersPlaying.size() == 1) {
-      for (int i = 0; i < playersPlaying.size(); i++) {
-        String newPosition = "|" + playersPlaying.get(i) + "|";
+      // The "strList.set" below is used to change the index of the board to include the positon that the player is currently at.
+      strList.set(playersPlayingIndex.get(0), "|" + playersPlaying.get(0) + "|");
 
-        strList.set(playersPlayingIndex.get(0), newPosition);
-      }
+      // If two players are playing the game, then the else if statement below will be used.
     } else if (playersPlaying.size() == 2) {
+      // If the two players have the same index, i.e. they're on the same tile, then the if statement below will be used.
       if (playersPlayingIndex.get(0) == playersPlayingIndex.get(1)) {
-        for (int i = 0; i < playersPlaying.size(); i++) {
-          newIndex += (playersPlaying.get(i));
+          // The "newIndex" string variable is used to combine the two players into one index so that they can be placed on the board together.
+          newIndex += (playersPlaying.get(0)+playersPlaying.get(1)+"|");
 
-          strList.set(playersPlayingIndex.get(i), newIndex);
-        }
-
-        newIndex += "|";
-        strList.set(playersPlayingIndex.get(0), newIndex);
+          strList.set(playersPlayingIndex.get(0), newIndex);
       }
+      // If the two players don't have the same then, the else statement below is used, and the indexes are simply changed as such.
       else {
         strList.set(playersPlayingIndex.get(0), ("|" + playersPlaying.get(0) + "|"));
         strList.set(playersPlayingIndex.get(1), ("|" + playersPlaying.get(1) + "|"));
       }
+      // Below the else if statement is used if there are 3 players in the game.
     } else if (playersPlaying.size() == 3) {
+      // The if statement below is used to see if all three players have the same index.
       if (playersPlayingIndex.get(0) == playersPlayingIndex.get(1) && playersPlayingIndex.get(2) == playersPlayingIndex.get(1)) {
-        for (int i = 0; i < playersPlaying.size(); i++) {
-          newIndex += (playersPlaying.get(i));
+          newIndex += (playersPlaying.get(0) + playersPlaying.get(1) + playersPlaying.get(2));
 
-          strList.set(playersPlayingIndex.get(i), newIndex);
-        }
+          strList.set(playersPlayingIndex.get(0), newIndex);
       } else if (playersPlayingIndex.get(0) == playersPlayingIndex.get(1)) {
         newIndex += playersPlaying.get(0) + playersPlaying.get(1) + "|";
 
