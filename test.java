@@ -45,13 +45,15 @@ class test {
       AnswersValuesDic.add(i);
     }
 
-    // These are the questions and answer combos that the players are asked.
-    String question = keyValuesDic.get(randomIndex);
-    String answer = AnswersValuesDic.get(randomIndex);
+    // The record type below is used to store the answer and question combo.
+    record Answer(String AnswertoQuestion, String Question) {}
+
+    // We then assign questions and answers here by creating a new instance of the answerMatch record type.
+    Answer answerMatch = new Answer(AnswersValuesDic.get(randomIndex), keyValuesDic.get(randomIndex));
 
     // While the answer is returned so that it can be stored and compared to the user input, the question is printed out to the terminal.
-    System.out.println(question);
-    return answer;
+    System.out.println(answerMatch.Question);
+    return answerMatch.AnswertoQuestion;
   }
 
   // The functions purpose is that of constantly generating a new random number that can be used.
@@ -98,7 +100,7 @@ class test {
     int index = 0;
 
     // The for loop below is used in a similar way as the one above.
-       // The key difference being that instead of appending something to the ArrayList, we're just printing it out based on the index. 
+       // The key difference being that instead of appending something to the ArrayList, we're just printing it out based on the index.
     for(int x = 0; x < 10; x++) {
       for(int i = 0; i < 10; i++) {
         System.out.print(strList.get(index));
