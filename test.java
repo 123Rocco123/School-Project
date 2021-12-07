@@ -287,7 +287,7 @@ class test {
             int wrongAndChute = playerPositions(currentPositionOnBoard, "chute");
 
             // The reason that an if-else block is to avoid an error where the "PlayerPositions.set(i, wrongAndChute)" is less than 0 (index out of bounds error).
-               // Therefore, if the position of the player is greater than 0, and the chute makes it so that the new position would be less than 0, then the if statement is executed making the new position 0 and avoiding the out of bounds error. 
+               // Therefore, if the position of the player is greater than 0, and the chute makes it so that the new position would be less than 0, then the if statement is executed making the new position 0 and avoiding the out of bounds error.
             if (wrongAndChute < 0) {
               PlayerPositions.set(i, 0);
             } else {
