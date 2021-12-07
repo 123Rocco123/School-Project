@@ -18,7 +18,7 @@ class test {
   }
 
   // This function has the purpose of containing the questions and answers.
-     // It's just i salso that of checking if the answers are correct or not.
+     // It's just is also that of checking if the answers are correct or not.
   public static String questions() {
     // Dictionary containing all of the questions required for the game.
     Hashtable<String, String> questionsDictionary = new Hashtable<String, String>();
@@ -208,23 +208,37 @@ class test {
       //System.out.println(PlayerPositions);
       System.out.println("Round: " + currentRound1.currentRound);
 
-      // The for loop below is used to 
+      // The for loop below is used to ask the players different questions.
+         // The amount of times that it will repeat in a single round depends on the number of players playing the game.
       for (int i = 0; i < playerCount; i++) {
+        /* The int variables below are used for:
+           Getting a random number between 0 and 7 (1 and 6), which is used as the dice throw.
+           The current position of the player which will be updated this round.
+           If the player landed on a ladder or chute or a normal spot. */
         int diceThrow = randomNumberFunc();
         int oldValue = PlayerPositions.get(i);
         int normalOrSpecial = (int)(Math.random() * 6);
 
         //System.out.println(diceThrow +" "+ oldValue +" "+ normalOrSpecial);
 
+        // The currentPositionOnBoard variable when having calling the "playerPositions" function.
+           // Called only when the player lands on a chute or ladder.
         int currentPositionOnBoard = PlayerPositions.get(i);
         System.out.println("\nPlayer " + (i + 1) + ", you rolled a: " + diceThrow + "\n");
 
+        // "answer" is used to store the answer of the question that the player is being asked to answer.
         String answer = questions();
+        // "userAnswer" is then used to store the answer that the user wrote to then check if its correct or not.
         String userAnswer = input.nextLine();
 
+        // The series of if, else, and else if statements below are used to check if the answer that the user wrote is correct.
+           // If its correct, then they'll be told so, and then depending on where they landed their position on the board can change by minimum the side that the dice was.
         if (userAnswer.equals(answer)) {
           System.out.println("You're correct");
 
+          // If the value is less than 5, then the value that the dice was is added to the current players position.
+             // This is to show that the player landed on a normal spot, and not a ladder.
+             // If the value is 5, then the "playerPositions" function will be called, and they'll move extra spaces.
           if (normalOrSpecial <= 4) {
             PlayerPositions.set(i, (oldValue + diceThrow));
           } else if (normalOrSpecial == 5) {
@@ -232,6 +246,7 @@ class test {
             PlayerPositions.set(i, rightAndLadder);
           }
         } else {
+          // The else statement works the same as the if statement, with the difference being that instead of increasing the spaces, they're decreased.
           System.out.println("You're incorrect");
 
           // If the user is incorrect, then they'll have to move back.
@@ -245,6 +260,8 @@ class test {
         }
       }
       //System.out.println(PlayerPositions);
+
+      // The board is then printed out with the new positions, and the round is incresed by 1.
       board(playerPieces, PlayerPositions);
 
       currentRound1.currentRound += 1;
