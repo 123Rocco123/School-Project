@@ -272,6 +272,9 @@ class test {
             int rightAndLadder = playerPositions(currentPositionOnBoard, "ladder");
             PlayerPositions.set(i, rightAndLadder);
           }
+        } else if (!userAnswer.equals(answer) && PlayerPositions.get(i) == 0) {
+          // The else if statement is only used when the player is at the very first index.
+          System.out.println("You're incorrect");
         } else {
           // The else statement works the same as the if statement, with the difference being that instead of increasing the spaces, they're decreased.
           System.out.println("You're incorrect");
@@ -282,15 +285,22 @@ class test {
             PlayerPositions.set(i, (oldValue - 1));
           } else if (normalOrSpecial == 5) {
             int wrongAndChute = playerPositions(currentPositionOnBoard, "chute");
-            PlayerPositions.set(i, wrongAndChute);
-          } // ADD ELSE STATEMENT FOR IF THE PLAYER GETS A WRONG ANSWER AT THE START.
+
+            // The reason that an if-else block is to avoid an error where the "PlayerPositions.set(i, wrongAndChute)" is less than 0 (index out of bounds error).
+               // Therefore, if the position of the player is greater than 0, and the chute makes it so that the new position would be less than 0, then the if statement is executed making the new position 0 and avoiding the out of bounds error. 
+            if (wrongAndChute < 0) {
+              PlayerPositions.set(i, 0);
+            } else {
+              PlayerPositions.set(i, wrongAndChute);
+            }
+          }
         }
       }
       //System.out.println(PlayerPositions);
 
       // The if statement below is used to check if a player has gotten 100 points or not.
          // If they have then they've won the game, and the loop is broken.
-         // The reason that it has to be broken is because below the conditional statement is the "board" function call, and if we don't break it when the value is greater than 100, then we'll get an "index out of bounds" error. 
+         // The reason that it has to be broken is because below the conditional statement is the "board" function call, and if we don't break it when the value is greater than 100, then we'll get an "index out of bounds" error.
       if (winner(PlayerPositions, currentRound1) == true) {
         break;
       }
