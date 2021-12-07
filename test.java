@@ -6,7 +6,7 @@ import java.util.Hashtable;
 
 // The class above is used as a constructor.
 class roundCalculator {
-  int currentRound;
+  int currentRound = 0;
 
   // The argument "playersInGame" is saved here for it to be used later in the for loop.
   int playerCount;
@@ -175,6 +175,17 @@ class test {
     }
   }
 
+  // Accessor function for class object.
+     // Used to keep track of the round in the game.
+  public static void immediateRound(roundCalculator objectName, int round) {
+    objectName.currentRound += round;
+  }
+
+  // The function is used to keep track of the amount of players that are currently playing in the game.
+  public static void playersPlayingGame(roundCalculator objectName, int playersInGame) {
+    objectName.playerCount = playersInGame;
+  }
+
   // The function below is used to store the Algorithm for the game.
   public static void gameAlgorithm(int playersInGame) {
     Scanner input = new Scanner(System.in);
@@ -185,11 +196,12 @@ class test {
 
     // The assignments below are used to assing values to the instance variables inside of the constructor class.
        // They are then used in the algorithm below.
-    currentRound1.currentRound = 1;
     currentRound1.newGame = true;
     currentRound1.gameOver = false;
-    currentRound1.playerCount = playersInGame;
     currentRound1.playerPieces = pieceSelection(playersInGame);
+
+    playersPlayingGame(currentRound1, playersInGame);
+    immediateRound(currentRound1, 1);
 
     // The ArrayList below is used to store the positions of the players.
     ArrayList<Integer> PlayerPositions = new ArrayList<Integer>();
@@ -271,7 +283,7 @@ class test {
       // The board is then printed out with the new positions, and the round is incresed by 1.
       board(currentRound1.playerPieces, PlayerPositions);
 
-      currentRound1.currentRound += 1;
+      immediateRound(currentRound1, 1);
     }
   }
 
