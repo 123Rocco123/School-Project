@@ -1,13 +1,13 @@
-// Program Name: Monopoly Game
+// Program Name: Chutes and Ladder Game
 // Author: Rocco Petruccio
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+// The class above is used as a constructor.
 class roundCalculator {
   int currentRound;
 }
-
 
 class test {
   // The following function is used to store the answer for the question that is outputted to the screen.
