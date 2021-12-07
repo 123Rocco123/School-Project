@@ -7,6 +7,19 @@ import java.util.Hashtable;
 // The class above is used as a constructor.
 class roundCalculator {
   int currentRound;
+
+  // The argument "playersInGame" is saved here for it to be used later in the for loop.
+  int playerCount;
+
+  // The variable is used to determine if this is the first game or not.
+     // This is used to determine if we have to add new starting positions to the "PlayerPositions" ArrayList.
+  boolean newGame;
+
+  // The "gameOver" variable is used to determine when the game has finished.
+  boolean gameOver;
+
+  // The ArrayList below is used to store the positions of the players.
+  ArrayList<String> playerPieces = new ArrayList<String>();
 }
 
 class test {
@@ -62,6 +75,8 @@ class test {
 
   // The functions purpose is that of constantly generating a new random number that can be used.
   public static int randomNumberFunc() {
+    // Generates an integer number from 0 to 5.
+       // The 1 is used to make the number go from 1 to 6.
     int diceThrow = (int)((Math.random() * 6) + 1);
 
     return diceThrow;
@@ -167,41 +182,33 @@ class test {
     // The class object below is used to keep track of the round that the players are playing in.
        // This is done by creating the object, and then initalizing the instance variable "currentRound".
     roundCalculator currentRound1 = new roundCalculator();
+
+    // The assignments below are used to assing values to the instance variables inside of the constructor class.
+       // They are then used in the algorithm below.
     currentRound1.currentRound = 1;
-
-    // The "playerPieces" ArrayList contains the pieces that the player / players are using to play the game.
-    ArrayList<String> playerPieces = pieceSelection(playersInGame);
-
-    // The variable is used to determine if this is the first game or not.
-       // This is used to determine if we have to add new starting positions to the "PlayerPositions" ArrayList.
-    boolean newGame = true;
+    currentRound1.newGame = true;
+    currentRound1.gameOver = false;
+    currentRound1.playerCount = playersInGame;
+    currentRound1.playerPieces = pieceSelection(playersInGame);
 
     // The ArrayList below is used to store the positions of the players.
     ArrayList<Integer> PlayerPositions = new ArrayList<Integer>();
 
-    // The argument "playersInGame" is saved here for it to be used later in the for loop.
-    int playerCount = playersInGame;
-
     // Depending on the amount of players that are going to play the game game, the for loop will repeat that many times.
        // This means that depending on the amount of players, more or less starting positions will be added to the "PlayerPositions" ArrayList.
-    if (newGame == true) {
-      for (int i = 0; i < playerCount; i++) {
+    if (currentRound1.newGame == true) {
+      for (int i = 0; i < currentRound1.playerCount; i++) {
         PlayerPositions.add(0);
       }
-      newGame = false;
+      currentRound1.newGame = false;
     }
 
-    //System.out.println(PlayerPositions);
-
-    // The "gameOver" function is used to determine when the game has finished.
-    boolean gameOver = false;
-
     // The while loop is used to combine all of the questions, postions of the player, and etc to create the game itself.
-    while (gameOver == false) {
+    while (currentRound1.gameOver == false) {
       for (int x = 0; x < PlayerPositions.size(); x++) {
         if (PlayerPositions.get(x) >= 100) {
           System.out.println("Congratulations Player " + (x + 1) + ", you've won!");
-          gameOver = true;
+          currentRound1.gameOver = true;
         }
       }
 
@@ -210,7 +217,7 @@ class test {
 
       // The for loop below is used to ask the players different questions.
          // The amount of times that it will repeat in a single round depends on the number of players playing the game.
-      for (int i = 0; i < playerCount; i++) {
+      for (int i = 0; i < currentRound1.playerCount; i++) {
         /* The int variables below are used for:
            Getting a random number between 0 and 7 (1 and 6), which is used as the dice throw.
            The current position of the player which will be updated this round.
@@ -256,13 +263,13 @@ class test {
           } else if (normalOrSpecial == 5) {
             int wrongAndChute = playerPositions(currentPositionOnBoard, "chute");
             PlayerPositions.set(i, wrongAndChute);
-          }
+          } // ADD ELSE STATEMENT FOR IF THE PLAYER GETS A WRONG ANSWER AT THE START.
         }
       }
       //System.out.println(PlayerPositions);
 
       // The board is then printed out with the new positions, and the round is incresed by 1.
-      board(playerPieces, PlayerPositions);
+      board(currentRound1.playerPieces, PlayerPositions);
 
       currentRound1.currentRound += 1;
     }
