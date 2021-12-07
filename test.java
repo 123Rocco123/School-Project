@@ -181,6 +181,20 @@ class test {
     objectName.currentRound += round;
   }
 
+  // The function is used to check if someone is a winner or not.
+  public static boolean winner(ArrayList<Integer> playerPositions, roundCalculator objectName) {
+    for (int x = 0; x < playerPositions.size(); x++) {
+      if (playerPositions.get(x) >= 100) {
+        System.out.println("Congratulations Player " + (x + 1) + ", you've won!");
+
+        objectName.gameOver = true;
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   // The function is used to keep track of the amount of players that are currently playing in the game.
   public static void playersPlayingGame(roundCalculator objectName, int playersInGame) {
     objectName.playerCount = playersInGame;
@@ -200,6 +214,7 @@ class test {
     currentRound1.gameOver = false;
     currentRound1.playerPieces = pieceSelection(playersInGame);
 
+    // The function calls are used to store the values of the amount of players in the game into the instance variable of the class object, and the round that the player is playing.
     playersPlayingGame(currentRound1, playersInGame);
     immediateRound(currentRound1, 1);
 
@@ -217,13 +232,6 @@ class test {
 
     // The while loop is used to combine all of the questions, postions of the player, and etc to create the game itself.
     while (currentRound1.gameOver == false) {
-      for (int x = 0; x < PlayerPositions.size(); x++) {
-        if (PlayerPositions.get(x) >= 100) {
-          System.out.println("Congratulations Player " + (x + 1) + ", you've won!");
-          currentRound1.gameOver = true;
-        }
-      }
-
       //System.out.println(PlayerPositions);
       System.out.println("Round: " + currentRound1.currentRound);
 
@@ -279,6 +287,13 @@ class test {
         }
       }
       //System.out.println(PlayerPositions);
+
+      // The if statement below is used to check if a player has gotten 100 points or not.
+         // If they have then they've won the game, and the loop is broken.
+         // The reason that it has to be broken is because below the conditional statement is the "board" function call, and if we don't break it when the value is greater than 100, then we'll get an "index out of bounds" error. 
+      if (winner(PlayerPositions, currentRound1) == true) {
+        break;
+      }
 
       // The board is then printed out with the new positions, and the round is incresed by 1.
       board(currentRound1.playerPieces, PlayerPositions);
