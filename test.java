@@ -4,6 +4,10 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+class roundCalculator {
+  int currentRound;
+}
+
 
 class test {
   // The following function is used to store the answer for the question that is outputted to the screen.
@@ -74,12 +78,12 @@ class test {
     } else if (LadderOrChute.equals("ladder")) {
         return currentIndex + chuteOrLadder;
     } else {
-        return 0;
+        return 1;
     }
   }
 
   // The "board" function has the role of outputting the board that the players are playing on.
-  public static void board(ArrayList players, ArrayList playerPosition) {
+  public static void board(ArrayList<String> players, ArrayList<Integer> playerPosition) {
     ArrayList<String> strList = new ArrayList<String>();
     ArrayList<String> playersPlaying = players;
     ArrayList<Integer> playersPlayingIndex = playerPosition;
@@ -160,6 +164,14 @@ class test {
   public static void gameAlgorithm(int playersInGame) {
     Scanner input = new Scanner(System.in);
 
+    // The class object below is used to keep track of the round that the players are playing in.
+       // This is done by creating the object, and then initalizing the instance variable "currentRound".
+    roundCalculator currentRound1 = new roundCalculator();
+    currentRound1.currentRound = 1;
+
+    // The "playerPieces" ArrayList contains the pieces that the player / players are using to play the game.
+    ArrayList<String> playerPieces = pieceSelection(playersInGame);
+
     // The variable is used to determine if this is the first game or not.
        // This is used to determine if we have to add new starting positions to the "PlayerPositions" ArrayList.
     boolean newGame = true;
@@ -179,20 +191,30 @@ class test {
       newGame = false;
     }
 
-    System.out.println(PlayerPositions);
+    //System.out.println(PlayerPositions);
 
     // The "gameOver" function is used to determine when the game has finished.
     boolean gameOver = false;
 
     // The while loop is used to combine all of the questions, postions of the player, and etc to create the game itself.
     while (gameOver == false) {
-      //
+      for (int x = 0; x < PlayerPositions.size(); x++) {
+        if (PlayerPositions.get(x) >= 100) {
+          System.out.println("Congratulations Player " + (x + 1) + ", you've won!");
+          gameOver = true;
+        }
+      }
+
+      //System.out.println(PlayerPositions);
+      System.out.println("Round: " + currentRound1.currentRound);
+
+      // The for loop below is used to 
       for (int i = 0; i < playerCount; i++) {
         int diceThrow = randomNumberFunc();
         int oldValue = PlayerPositions.get(i);
         int normalOrSpecial = (int)(Math.random() * 6);
 
-        System.out.println(diceThrow +" "+ oldValue +" "+ normalOrSpecial);
+        //System.out.println(diceThrow +" "+ oldValue +" "+ normalOrSpecial);
 
         int currentPositionOnBoard = PlayerPositions.get(i);
         System.out.println("\nPlayer " + (i + 1) + ", you rolled a: " + diceThrow + "\n");
@@ -203,7 +225,7 @@ class test {
         if (userAnswer.equals(answer)) {
           System.out.println("You're correct");
 
-          if (normalOrSpecial < 4) {
+          if (normalOrSpecial <= 4) {
             PlayerPositions.set(i, (oldValue + diceThrow));
           } else if (normalOrSpecial == 5) {
             int rightAndLadder = playerPositions(currentPositionOnBoard, "ladder");
@@ -214,7 +236,7 @@ class test {
 
           // If the user is incorrect, then they'll have to move back.
              // The amount that they move back is based on how long the ladder is.
-          if (normalOrSpecial < 4) {
+          if (normalOrSpecial <= 4) {
             PlayerPositions.set(i, (oldValue - 1));
           } else if (normalOrSpecial == 5) {
             int wrongAndChute = playerPositions(currentPositionOnBoard, "chute");
@@ -222,12 +244,15 @@ class test {
           }
         }
       }
-      System.out.println(PlayerPositions);
-      break;
+      //System.out.println(PlayerPositions);
+      board(playerPieces, PlayerPositions);
+
+      currentRound1.currentRound += 1;
     }
   }
 
-  public static void pieceSelection(int numberOfPlayers) {
+  // This function is used to ask the player what piece they want to use to play the game.
+  public static ArrayList<String> pieceSelection(int numberOfPlayers) {
     Scanner input = new Scanner(System.in);
     ArrayList<String> playerPieces = new ArrayList<String>();
     ArrayList<Integer> playerIndexValues = new ArrayList<Integer>();
@@ -247,6 +272,7 @@ class test {
     }
 
     board(playerPieces, playerIndexValues);
+    return playerPieces;
   }
 
   // This function is used to determine the conditions of the game.
@@ -266,7 +292,6 @@ class test {
 
       startingConditions = false;
 
-      pieceSelection(numberOfPlayers);
       gameAlgorithm(numberOfPlayers);
     }
   }
