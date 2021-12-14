@@ -183,10 +183,36 @@ class test {
 
   // The function is used to check if someone is a winner or not.
   public static boolean winner(ArrayList<Integer> playerPositions, roundCalculator objectName) {
+    ArrayList<Integer> Podium = playerPositions;
+
+    int placeholder = 0;
+
+    // The for loop below is the sort algorithm which sorts the positions that the players were in when one of them wins from highest to lowest.
+       // It's sorting it in terms of the podium positions (1st, 2nd, and 3rd).
+    for (int i = Podium.size() - 1; i > 0; i--) {
+      for (int j = 0; j < i; j++) {
+        if (Podium.get(j) < Podium.get(j+1)) {
+          placeholder = Podium.get(j);
+
+          Podium.set(j, Podium.get(j+1));
+          Podium.set(j+1, placeholder);
+        }
+      }
+    }
+
+    // The for loop below is then used to check which player has won, and then outputs it to the terminal.
+       // It also uses another for loop inside of the if condition to print out the podium for the rest of the players.
     for (int x = 0; x < playerPositions.size(); x++) {
       if (playerPositions.get(x) >= 100) {
         System.out.println("Congratulations Player " + (x + 1) + ", you've won!");
-
+        System.out.println("\nPodium:\n");
+        for (int y = 0; y < Podium.size(); y++) {
+          if (playerPositions.get(x) >= 100) {
+            System.out.println((y+1) + ": 100");
+          } else {
+            System.out.println((y+1) + ": " + Podium.get(y));
+          }
+        }
         objectName.gameOver = true;
         return true;
       }
