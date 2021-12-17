@@ -23,13 +23,6 @@ class roundCalculator {
 }
 
 class test {
-  // The following function is used to store the answer for the question that is outputted to the screen.
-  public static void AnswersToQuestions(String Answer) {
-    String questionAnswer = Answer;
-
-    System.out.print(questionAnswer + " ");
-  }
-
   // This function has the purpose of containing the questions and answers.
      // It's just is also that of checking if the answers are correct or not.
   public static String questions() {
