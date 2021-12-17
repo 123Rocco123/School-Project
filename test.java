@@ -62,15 +62,9 @@ class test {
       AnswersValuesDic.add(i);
     }
 
-    // The record type below is used to store the answer and question combo.
-    record Answer(String AnswertoQuestion, String Question) {}
-
-    // We then assign questions and answers here by creating a new instance of the answerMatch record type.
-    Answer answerMatch = new Answer(AnswersValuesDic.get(randomIndex), keyValuesDic.get(randomIndex));
-
     // While the answer is returned so that it can be stored and compared to the user input, the question is printed out to the terminal.
-    System.out.println(answerMatch.Question);
-    return answerMatch.AnswertoQuestion;
+    System.out.println(keyValuesDic.get(randomIndex));
+    return AnswersValuesDic.get(randomIndex);
   }
 
   // The functions purpose is that of constantly generating a new random number that can be used.
@@ -154,7 +148,7 @@ class test {
 
         strList.set(playersPlayingIndex.get(0), (newIndex));
         strList.set(playersPlayingIndex.get(1), ("|" + playersPlaying.get(1) + "|"));
-      // The else if statement below is used if the second and the third player are on the same index, but not the first. 
+      // The else if statement below is used if the second and the third player are on the same index, but not the first.
       } else if (playersPlayingIndex.get(1) == playersPlayingIndex.get(2)) {
         newIndex += playersPlaying.get(1) + playersPlaying.get(2) + "|";
 
