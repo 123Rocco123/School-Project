@@ -142,16 +142,19 @@ class test {
           newIndex += (playersPlaying.get(0) + playersPlaying.get(1) + playersPlaying.get(2));
 
           strList.set(playersPlayingIndex.get(0), newIndex);
+      // The else if statement is used below if the first and second player are at the same index, but not the third.
       } else if (playersPlayingIndex.get(0) == playersPlayingIndex.get(1)) {
         newIndex += playersPlaying.get(0) + playersPlaying.get(1) + "|";
 
         strList.set(playersPlayingIndex.get(0), (newIndex));
         strList.set(playersPlayingIndex.get(2), ("|" + playersPlaying.get(2) + "|"));
+      // The else if statement below are used if the first and third player are on the same index, but not the second.
       } else if (playersPlayingIndex.get(0) == playersPlayingIndex.get(2)) {
         newIndex += playersPlaying.get(0) + playersPlaying.get(2) + "|";
 
         strList.set(playersPlayingIndex.get(0), (newIndex));
         strList.set(playersPlayingIndex.get(1), ("|" + playersPlaying.get(1) + "|"));
+      // The else if statement below is used if the second and the third player are on the same index, but not the first. 
       } else if (playersPlayingIndex.get(1) == playersPlayingIndex.get(2)) {
         newIndex += playersPlaying.get(1) + playersPlaying.get(2) + "|";
 
